@@ -313,7 +313,7 @@ class BaseQuery:
 
     def _download_file(self, url, local_filepath, timeout=None, auth=None,
                        continuation=True, cache=False, method="GET",
-                       head_safe=False, **kwargs):
+                       head_safe=False, close_response=True, **kwargs):
         """
         Download a file.  Resembles `astropy.utils.data.download_file` but uses
         the local ``_session``
@@ -435,7 +435,8 @@ class BaseQuery:
                     else:
                         pb.update(bytes_read)
 
-        response.close()
+        if close_response:
+            response.close()
         return response
 
 
