@@ -807,6 +807,7 @@ def _parse_angle(angle):
         unit, value = 'd', angle.to(u.deg).value
     return unit, value
 
+
 def vo_link_parser_onerow(volink, tablerow):
     """
     VO tables can have 'LINK' associated metadata in Vizier; the votable 1.1
@@ -819,23 +820,18 @@ def vo_link_parser_onerow(volink, tablerow):
     >>> vo_link_parser(linkstr, row)
     'http://vizier.u-strasbg.fr/viz-bin/getassocdata?obs_publisher_did=ivo://CDS.VizieR/V/127A?res=1001_ha.fits'
     """
+    # TODO: add check that only [a-zA-Z_] (no special characters) are in the {name of column} region.
 
     rowdict = dict(zip(tablerow.colnames, tablerow))
-    pstring = volink.replace("$","").format(**rowdict)
+    pstring = volink.replace("$", "").format(**rowdict)
 
     return pstring
 
+
 def vo_link_parser_table(votable):
     """
-    VO tables can have 'LINK' associated metadata in Vizier; the votable 1.1
-    and 1.2 format may be different from 1.3 but we don't have to worry about
-    that yet.
-
-    Example
-    -------
-    >>> linkstr = 'http://vizier.u-strasbg.fr/viz-bin/getassocdata?obs_publisher_did=ivo://CDS.VizieR/V/127A?res=${img}_ha.fits'
-    >>> vo_link_parser(linkstr, row)
-    'http://vizier.u-strasbg.fr/viz-bin/getassocdata?obs_publisher_did=ivo://CDS.VizieR/V/127A?res=1001_ha.fits'
+    Add a new column that includes the whole URL parsed from the meta.link.href
+    metadata.  See `vo_link_parser_onerow`.
     """
 
     for colname in votable.colnames:
@@ -848,6 +844,7 @@ def vo_link_parser_table(votable):
             new_column = tbl.Column(data=[vo_link_parser_onerow(href, row) for row in votable],
                                     name=column.name+"_link")
             votable.add_column(new_column)
+
 
 class VizierKeyword(list):
 
