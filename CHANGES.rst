@@ -117,6 +117,11 @@ gaia
 - Improved code to handle bit data type. [#1784]
 - Prepared code to handle new datalink products. [#1784]
 
+vizier
+^^^^^^
+
+- Vizier: Add 'datalink' column (link to FITS) when present. [#1455]
+
 
 0.4.1 (2020-06-19)
 ==================
@@ -470,7 +475,6 @@ Infrastructure, Utility and Other Changes and Additions
   attributes which give a citation for astroquery in bibtex format. [#1391]
 - VIZIER: Support using the output values of ``find_catalog`` in
   ``get_catalog``. [#603]
-- Vizier: Add 'datalink' column (link to FITS) when present. [#1455]
 
 
 0.3.9 (2018-12-06)
