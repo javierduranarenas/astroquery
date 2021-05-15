@@ -244,13 +244,15 @@ class HiGalClass(BaseQuery):
                                                 cache=False,
                                                )
         base_response.raise_for_status()
+        jdict = base_response.json()['aaData']
 
-        lines = base_response.text.split("\n")
-        dataline = [line for line in lines if 'fitsHeaders = JSON.parse(\'' in line][0]
+        #lines = base_response.text.split("\n")
+        #dataline = [line for line in lines if 'fitsHeaders = JSON.parse(\'' in line][0]
 
-        json_data = dataline.split('fitsHeaders = JSON.parse(\'')[1].strip('\');')
+        #json_data = dataline.split('fitsHeaders = JSON.parse(\'')[1].strip('\');')
 
-        jdict = json.loads(json_data)
+        #jdict = json.loads(json_data)
+
         filenames = {wlname: jdict[str(wlnum)]['FILENAME']
                      for wlname, wlnum in self.HIGAL_CATALOGS.items()
                      if str(wlnum) in jdict}
